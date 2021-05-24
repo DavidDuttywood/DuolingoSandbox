@@ -1,0 +1,84 @@
+﻿@model RootObject
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@{
+    // xp = Model.Courses.Select(course => course.Xp).ToArray();
+    // var title = Model.Courses.Select(course => course.Title).ToArray();
+
+}
+
+@section Scripts {
+    <script>
+
+        var randomColorGenerator = function () {
+            return '#' + (Math.random().toString(16) + '0000000').slice(2, 8);
+        };
+
+        const data = {
+            labels: ["Chinese", "Japanese", "French", "Arabic", "Indonesian", "Korean", "Latin", "Spanish", "German", "\u82F1\u8A9E", "\u82F1\u8BED", "Italian", "\u897F\u73ED\u7259\u8BED", "Russian", "\u65E5\u8BED"],
+            datasets: [
+                {
+                    label: 'Dataset 1',
+                    data: [17098, 22316, 18029, 1047, 15, 12, 15, 17810, 15, 1060, 74, 481, 0, 137, 0],
+                },
+            ],
+            @*labels: '@Html.Raw(Json.Serialize(ViewBag.Lang))',
+            datasets: [
+                {
+                    label: 'Dataset 1',
+                    data: '@{
+                        //Html.Raw(Json.Serialize((ViewBag.xo)))
+                    }',
+                },
+            ]*@
+        };
+
+        const config = {
+            type: 'doughnut',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Chart.js Doughnut Chart'
+                    }
+                }
+            },
+        };
+
+        var myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+    </script>
+
+}
+<div class="text-center">
+
+    @{
+        foreach (DuolingoCourse course in Model.Courses)
+        {
+            <p>
+                <span>@course.Title</span> -
+                <span>@course.Xp - xp -----</span>
+                <span>@course.Crowns - crowns</span>
+
+            </p>
+        }
+
+    }
+
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+</div>
