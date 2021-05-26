@@ -50,12 +50,15 @@ namespace DavidWoodward.Controllers
             
             RootObject datalist = JsonConvert.DeserializeObject<RootObject>(result.Result);
 
+            List<DuolingoCourse> sortedList = datalist.Courses.OrderBy(o => o.Xp).ToList();
 
-            var lang = datalist.Courses.Select(course => course.Title).ToList();
-            var xp = datalist.Courses.Select(course => course.Xp).ToList();
+            var lang = sortedList.Select(course => course.Title).Reverse().Take(6).ToList();
+            var xp = sortedList.Select(course => course.Xp).Reverse().Take(6).ToList();
+            var crowns = sortedList.Select(course => course.Crowns).Reverse().Take(6).ToList();
 
-            ViewBag.Lang = lang;
+            ViewBag.lang = lang;
             ViewBag.xp = xp;
+            ViewBag.crowns = crowns;
 
             return View(datalist);
         }
